@@ -8,6 +8,7 @@ from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import save_image
 from torch.utils.tensorboard import SummaryWriter                               #Assignment 1
+from PIL import Image
 
 vessl.init(organization="mustbetracy", project="assignment2")                   #Assignment 2
 
