@@ -156,7 +156,7 @@ if __name__ == "__main__":
             sample = model.decode(sample).cpu()
             save_image(sample.view(64, 1, 28, 28),                              #Assignment 3
                         'results/sample_' + str(epoch) + '.png')
-            sample_images.append(vessl.image(sample))  
+            sample_images.append(vessl.Image(sample))  
 
 vessl.log({                                                                     #Assignment 3
     "Samples": sample_images
