@@ -150,13 +150,15 @@ if __name__ == "__main__":
     for epoch in range(1, args.epochs + 1):
         train(epoch)
         test(epoch)
+        sample_images = []                                                      #Assignment 3
         with torch.no_grad():
             sample = torch.randn(64, 20).to(device)
             sample = model.decode(sample).cpu()
-            # save_image(sample.view(64, 1, 28, 28),
-            #            'results/sample_' + str(epoch) + '.png')
-            vessl.log({                                                         #Assignment 3
-                'results/sample_' + str(epoch) + '.png': sample.view(64, 1, 28, 28)
-            })
-   
+            save_image(sample.view(64, 1, 28, 28),
+                        'results/sample_' + str(epoch) + '.png')
+            sample_images.append(vessl.Image(sample.view(64, 1, 28, 28)))       #Assignment 3
+
+vessl.log({                                                                     #Assignment 3
+    "Samples": sample_images
+})   
 writer.close()    # close a SummaryWriter instance                              #Assignment 1
