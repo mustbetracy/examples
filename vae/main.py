@@ -153,7 +153,7 @@ if __name__ == "__main__":
         with torch.no_grad():
             sample = torch.randn(64, 20).to(device)
             sample = model.decode(sample).cpu()
-            save_image(sample.view(64, 1, 28, 28),
+            vessl.save_image(sample.view(64, 1, 28, 28),
                        'results/sample_' + str(epoch) + '.png')
    
 writer.close()    # close a SummaryWriter instance                              #Assignment 1
