@@ -1,5 +1,6 @@
 from __future__ import print_function
 import argparse
+import PIL
 import torch
 import torch.utils.data
 import vessl                                                                    #Assignment 2
@@ -8,7 +9,7 @@ from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import save_image
 from torch.utils.tensorboard import SummaryWriter                               #Assignment 1
-from PIL import Image
+import numpy as np
 
 vessl.init(organization="mustbetracy", project="assignment2")                   #Assignment 2
 
@@ -148,7 +149,6 @@ def test(epoch):
     )                                
 
 if __name__ == "__main__":
-    transform = transforms.ToPILImage()
     for epoch in range(1, args.epochs + 1):
         train(epoch)
         test(epoch)                                                     #Assignment 3
@@ -157,8 +157,11 @@ if __name__ == "__main__":
             sample = model.decode(sample).cpu()
             save_image(sample.view(64, 1, 28, 28),                              #Assignment 3
                         'results/sample_' + str(epoch) + '.png')
+            Tensor = np.array(sample.view(64, 1, 28, 28), dtype=np.uint8)
+            assert Tensor.shape[0] == 1
+            Tensor = Tensor[0]
             vessl.log({                                                                     #Assignment 3
-                'sample_' + str(epoch) + '.png': transform(sample.view(64, 1, 28, 28)),
+                'sample_' + str(epoch) + '.png': PIL.Image.fromarray(Tensor),
             })  
   
 writer.close()    # close a SummaryWriter instance                              #Assignment 1
