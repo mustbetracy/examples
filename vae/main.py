@@ -7,9 +7,9 @@ from torch import nn, optim
 from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import save_image
-from torch.utils.tensorboard import SummaryWriter  
+from torch.utils.tensorboard import SummaryWriter                               #Assignment 1
 
-vessl.init(organization="mustbetracy", project="assignment")                   #Assignment 2
+vessl.init(organization="mustbetracy", project="assignment")                    #Assignment 2
 
 writer = SummaryWriter()    # create a SummaryWriter instance                   #Assignment 1
 
@@ -117,6 +117,7 @@ def train(epoch):
           epoch, average_train_loss))
     # add train_loss value to scalar                                            #Assignment 1
     writer.add_scalar('train_loss', average_train_loss, epoch)    
+    # add train_loss value to vessl log
     vessl.log(                                                                  #Assignment 2
         step=epoch,
         payload={'train_loss': average_train_loss}
@@ -141,6 +142,7 @@ def test(epoch):
     print('====> Test set loss: {:.4f}'.format(test_loss))
     # add test_loss value to scalar                                             #Assignment 1
     writer.add_scalar('test_loss', test_loss, epoch)
+    # add test_loss value to vessl log
     vessl.log(                                                                  #Assignment 2
         step=epoch,
         payload={'test_loss': test_loss}
@@ -149,11 +151,11 @@ def test(epoch):
 if __name__ == "__main__":
     for epoch in range(1, args.epochs + 1):
         train(epoch)
-        test(epoch)                                                             #Assignment 3
+        test(epoch)
         with torch.no_grad():
             sample = torch.randn(64, 20).to(device)
             sample = model.decode(sample).cpu()
-            save_image(sample.view(64, 1, 28, 28),                              #Assignment 3
+            save_image(sample.view(64, 1, 28, 28), 
                         'results/sample_' + str(epoch) + '.png')  
   
 writer.close()    # close a SummaryWriter instance                              #Assignment 1
