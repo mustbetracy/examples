@@ -2,11 +2,14 @@ from __future__ import print_function
 import argparse
 import torch
 import torch.utils.data
+import vessl                                                                    #Assignment 2
 from torch import nn, optim
 from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import save_image
 from torch.utils.tensorboard import SummaryWriter                               #Assignment 1
+
+vessl.init(organization="mustbetracy", project="assignment2")                   #Assignment 2
 
 writer = SummaryWriter()    # create a SummaryWriter instance                   #Assignment 1
 
@@ -109,11 +112,15 @@ def train(epoch):
                 100. * batch_idx / len(train_loader),
                 loss.item() / len(data)))
 
+    average_train_loss = train_loss / len(train_loader.dataset)
     print('====> Epoch: {} Average loss: {:.4f}'.format(
-          epoch, train_loss / len(train_loader.dataset)))
+          epoch, average_train_loss))
     # add train_loss value to scalar                                            #Assignment 1
-    writer.add_scalar('train_loss', (train_loss / len(train_loader.dataset)), epoch)    
-
+    writer.add_scalar('train_loss', average_train_loss, epoch)    
+    vessl.log(                                                                  #Assignment 2
+        step=epoch,
+        payload={'train_loss': average_train_loss}
+    ) 
 
 def test(epoch):
     model.eval()
@@ -134,6 +141,10 @@ def test(epoch):
     print('====> Test set loss: {:.4f}'.format(test_loss))
     # add test_loss value to scalar                                             #Assignment 1
     writer.add_scalar('test_loss', test_loss, epoch)
+    vessl.log(                                                                  #Assignment 2
+        step=epoch,
+        payload={'test_loss': test_loss}
+    )                                
 
 if __name__ == "__main__":
     for epoch in range(1, args.epochs + 1):
