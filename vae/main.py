@@ -9,7 +9,7 @@ from torchvision import datasets, transforms
 from torchvision.utils import save_image
 from torch.utils.tensorboard import SummaryWriter  
 
-vessl.init(organization="mustbetracy", project="assignment2")                   #Assignment 2
+vessl.init(organization="mustbetracy", project="assignment")                   #Assignment 2
 
 writer = SummaryWriter()    # create a SummaryWriter instance                   #Assignment 1
 
