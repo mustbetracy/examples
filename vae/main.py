@@ -117,8 +117,8 @@ def train(epoch):
           epoch, average_train_loss))
     # add train_loss value to scalar                                            #Assignment 1
     writer.add_scalar('train_loss', average_train_loss, epoch)    
-    # add train_loss value to vessl log
-    vessl.log(                                                                  #Assignment 2
+    # add train_loss value to vessl log                                         #Assignment 2
+    vessl.log(                         
         step=epoch,
         payload={'train_loss': average_train_loss}
     ) 
@@ -142,8 +142,8 @@ def test(epoch):
     print('====> Test set loss: {:.4f}'.format(test_loss))
     # add test_loss value to scalar                                             #Assignment 1
     writer.add_scalar('test_loss', test_loss, epoch)
-    # add test_loss value to vessl log
-    vessl.log(                                                                  #Assignment 2
+    # add test_loss value to vessl log                                          #Assignment 2
+    vessl.log(                        
         step=epoch,
         payload={'test_loss': test_loss}
     )                                
