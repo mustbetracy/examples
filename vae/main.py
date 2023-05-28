@@ -154,8 +154,9 @@ if __name__ == "__main__":
         with torch.no_grad():
             sample = torch.randn(64, 20).to(device)
             sample = model.decode(sample).cpu()
-            sample_images.append(save_image(sample.view(64, 1, 28, 28),         #Assignment 3
-                        'results/sample_' + str(epoch) + '.png'))       
+            save_image(sample.view(64, 1, 28, 28),                              #Assignment 3
+                        'results/sample_' + str(epoch) + '.png')
+            sample_images.append(vessl.image(sample))  
 
 vessl.log({                                                                     #Assignment 3
     "Samples": sample_images
