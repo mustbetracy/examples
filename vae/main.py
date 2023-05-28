@@ -6,7 +6,9 @@ from torch import nn, optim
 from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import save_image
+from torch.utils.tensorboard import SummaryWriter                               #Assignment 1
 
+writer = SummaryWriter()    # create a SummaryWriter instance                   #Assignment 1
 
 parser = argparse.ArgumentParser(description='VAE MNIST Example')
 parser.add_argument('--batch-size', type=int, default=128, metavar='N',
@@ -109,6 +111,8 @@ def train(epoch):
 
     print('====> Epoch: {} Average loss: {:.4f}'.format(
           epoch, train_loss / len(train_loader.dataset)))
+    # add train_loss value to scalar                                            #Assignment 1
+    writer.add_scalar('train_loss', (train_loss / len(train_loader.dataset)), epoch)    
 
 
 def test(epoch):
@@ -128,6 +132,8 @@ def test(epoch):
 
     test_loss /= len(test_loader.dataset)
     print('====> Test set loss: {:.4f}'.format(test_loss))
+    # add test_loss value to scalar                                             #Assignment 1
+    writer.add_scalar('test_loss', test_loss, epoch)
 
 if __name__ == "__main__":
     for epoch in range(1, args.epochs + 1):
@@ -138,3 +144,5 @@ if __name__ == "__main__":
             sample = model.decode(sample).cpu()
             save_image(sample.view(64, 1, 28, 28),
                        'results/sample_' + str(epoch) + '.png')
+   
+writer.close()    # close a SummaryWriter instance                              #Assignment 1
