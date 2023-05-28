@@ -147,6 +147,7 @@ def test(epoch):
     )                                
 
 if __name__ == "__main__":
+    transform = transforms.ToPILImage()
     for epoch in range(1, args.epochs + 1):
         train(epoch)
         test(epoch)                                                     #Assignment 3
@@ -156,7 +157,7 @@ if __name__ == "__main__":
             save_image(sample.view(64, 1, 28, 28),                              #Assignment 3
                         'results/sample_' + str(epoch) + '.png')
             vessl.log({                                                                     #Assignment 3
-                'sample_' + str(epoch) + '.png': sample,
+                'sample_' + str(epoch) + '.png': transform(sample.view(64, 1, 28, 28)),
             })  
   
 writer.close()    # close a SummaryWriter instance                              #Assignment 1
